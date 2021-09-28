@@ -310,6 +310,7 @@ def main(inputdir, outputdir, modeldir, modeln, preview, octaves, octave_scale, 
 
     # guide
     if guide is not None:
+        print(guide, inputdir)
         guideimg = PIL.Image.open(os.path.join(inputdir, guide))
         guideimgresized = guideimg.resize((224, 224), PIL.Image.ANTIALIAS)
         guide = np.float32(guideimgresized)
@@ -493,7 +494,7 @@ def createVideo(inputdir, outputdir, framerate):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='DeepDreamAnim')
-    parser.add_argument('-i', '--input', help='Input directory', required=True)
+    parser.add_argument('-i', '--input', help='Input directory', type=str, required=True)
     parser.add_argument('-o', '--output', help='Output directory', required=True)
     parser.add_argument('-m', '--model', help='Model directory', required=False)
     parser.add_argument('-p', '--preview', help='Preview image width. Default: 0', type=int, required=False)
@@ -522,6 +523,7 @@ if __name__ == "__main__":
  
     args = parser.parse_args()
 
+    print(args)
     if args.extract is 1:
         extractVideo(args.input, args.output)
     elif args.create is 1:
@@ -529,5 +531,5 @@ if __name__ == "__main__":
         if args.framerate is not None: framerate = args.framerate
         createVideo(args.input, args.output, framerate)
     else:   
-        main(args.input, args.output, args.model, args.preview, args.octaves, args.octavescale, args.iterations, args.jitter,
-             args.zoom, args.stepsize, args.blendflow, args.blendstatic, args.layers, args.guide, args.gpu, args.flow, args.flowthresh, args.divide, args.maxWidth, args.maxHeight, args.modeln)
+        main(args.input, args.output, args.model, args.modeln, args.preview, args.octaves, args.octavescale, args.iterations, args.jitter,
+             args.zoom, args.stepsize, args.blendflow, args.blendstatic, args.layers, args.guide, args.gpu, args.flow, args.flowthresh, args.divide, args.maxWidth, args.maxHeight)
